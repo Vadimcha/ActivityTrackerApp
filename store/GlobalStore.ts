@@ -16,7 +16,7 @@ const useGlobalStore = create<GlobalStore>()(
         (set, get) => ({
             habits: [],
             getNewId: () => { return ((
-                Math.max(...get().habits.map(habit => habit.id)) === null ?
+                    get().habits.length == 0 ?
                     0 :
                     Math.max(...get().habits.map(habit => habit.id)))
                 + 1) },

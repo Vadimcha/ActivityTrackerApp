@@ -25,7 +25,7 @@ export const HabitsTable = ({ type }: {type: string}) => {
         >
             <Table.Td className={styles.checkboxBox}>
                 <Checkbox
-                    aria-label="Select row"
+                    aria-label={`Select row ${item.id}`}
                     checked={selectedRows.includes(item.id)}
                     onChange={(event) =>
                         setSelectedRows(
