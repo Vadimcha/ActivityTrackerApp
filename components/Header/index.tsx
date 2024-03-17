@@ -1,5 +1,5 @@
 import React from 'react';
-import {Avatar, Flex, Group} from "@mantine/core";
+import {Avatar, Divider, Flex, Group} from "@mantine/core";
 
 export const Header = ({ children }: {children: React.ReactNode}) => {
     return (
@@ -16,6 +16,7 @@ export const Header = ({ children }: {children: React.ReactNode}) => {
                     <Avatar radius={"xl"} alt={"Avatar"} />
                 </Group>
             </Flex>
+            <Divider my="md" />
         </div>
     )
 }

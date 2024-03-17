@@ -2,16 +2,15 @@
 import React, {useState} from 'react';
 import {Space, Switch} from "@mantine/core";
 import {useFormik} from "formik";
+import useGlobalStore from "@/store/GlobalStore";
 
 export const DeleteHabit = ({ids, children}: {ids: number[], children: React.ReactNode}) => {
     const [save, setSave] = useState<boolean>(false)
+    const {deleteHabits} = useGlobalStore()
     const formik = useFormik({
-        initialValues: {
-            save: false,
-        },
-        onSubmit: values => {
-            let copy = values;
-            copy.save = save;
+        initialValues: {},
+        onSubmit: () => {
+            deleteHabits(ids, save)
         }
     })
     return (

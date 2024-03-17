@@ -42,15 +42,15 @@ export const HabitsPage = () => {
                     <Space h="md" />
 
                     <Tabs.Panel value="today">
-                        <HabitsTable />
+                        <HabitsTable type={"Ежедневная"} />
                     </Tabs.Panel>
 
                     <Tabs.Panel value="week">
-                        Messages tab content
+                        <HabitsTable type={"Еженедельная"} />
                     </Tabs.Panel>
 
                     <Tabs.Panel value="month">
-                        Settings tab content
+                        <HabitsTable type={"Ежемесячная"} />
                     </Tabs.Panel>
                 </Tabs>
             </div>

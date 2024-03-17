@@ -7,7 +7,8 @@ interface GlobalStore {
     habits: IHabit[],
     getNewId: () => Number,
     addNewHabit: (habit: IHabit) => void,
-
+    deleteHabits: (ids: Number[], save: boolean) => void,
+    changeHabitProgress: (id: number, progress: number) => void,
 }
 
 const useGlobalStore = create<GlobalStore>()(
@@ -16,13 +17,22 @@ const useGlobalStore = create<GlobalStore>()(
             habits: [],
             getNewId: () => { return ((
                 Math.max(...get().habits.map(habit => habit.id)) === null ?
-                    -1 :
+                    0 :
                     Math.max(...get().habits.map(habit => habit.id)))
                 + 1) },
             addNewHabit: (habit: IHabit) => {
                 set({ habits: [...get().habits, habit]})
             },
-
+            deleteHabits: (ids: Number[], save: boolean) => {
+                let copy = get().habits.filter((item) => !(ids.includes(item.id)))
+                set({ habits: copy })
+            },
+            changeHabitProgress: (id: Number, new_progress: Number) => {
+                let foundInd = get().habits.findIndex(habit => habit.id == id)
+                let copy = get().habits
+                copy[foundInd].progress = new_progress as number;
+                set({ habits: copy })
+            }
         }),
         {
             name: 'habits',

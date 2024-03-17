@@ -1,32 +1,16 @@
 import React, {useState} from 'react';
-import {Button, Center, Text, Checkbox, Progress, Table, UnstyledButton, Modal, Flex} from "@mantine/core";
+import {Button, Center, Text, Checkbox, Progress, Table, UnstyledButton, Modal, Flex, Space} from "@mantine/core";
 import {IconAdjustmentsHorizontal, IconTrash, IconTrashX} from "@tabler/icons-react";
 import './HabitsTable.scss'
 import {useDisclosure} from "@mantine/hooks";
 import {ChangeHabitProgress} from "@/components/ChangeHabitProgress";
 import {DeleteHabit} from "@/components/DeleteHabit";
 import {IHabit} from "@/models/IHabit";
-import {AddHabit} from "@/components/AddHabit";
 import styles from './HabitsTable.module.scss'
+import useGlobalStore from "@/store/GlobalStore";
 
-const TableData: IHabit[] = [
-    {
-        id: 1,
-        name: 'Какая-то првычка',
-        type: "day",
-        progress: 25,
-        maxProgress: 100,
-    },
-    {
-        id: 2,
-        name: 'Какая-то првычка',
-        type: "day",
-        progress: 0,
-        maxProgress: 1,
-    }
-]
-
-export const HabitsTable = () => {
+export const HabitsTable = ({ type }: {type: string}) => {
+    const { habits: TableData } = useGlobalStore()
     const [selectedRows, setSelectedRows] = useState<number[]>([]);
 
     const [openedChange, { open: openChangeModal, close: closeChangeModal }] = useDisclosure(false);
@@ -34,7 +18,7 @@ export const HabitsTable = () => {
 
     const [openedDelete, { open: openDeleteModal, close: closeDeleteModal }] = useDisclosure(false);
     const [deleteItems, setDeleteItems] = useState<number[]>([])
-    const rows = TableData.map((item, pos) => (
+    const rows = TableData.filter((item) => item.type == type).map((item, pos) => (
         <Table.Tr
             key={item.id}
             bg={selectedRows.includes(item.id) ? 'var(--mantine-color-blue-light)' : undefined}
@@ -63,7 +47,7 @@ export const HabitsTable = () => {
                     <Progress className={styles.progressBar} value={(item.progress / item.maxProgress) * 100}/>
                 </div>
             </Table.Td>
-            <Table.Td>
+            <Table.Td className={styles.centerBlock}>
                 <Button onClick={() => {openChangeModal(); setChangeItem(item)}} visibleFrom={"md"} size={"xs"} aria-label="Settings" leftSection={<IconAdjustmentsHorizontal size={16} stroke={2} />}>
                     Изменить прогресс
                 </Button>
@@ -71,7 +55,7 @@ export const HabitsTable = () => {
                     <IconAdjustmentsHorizontal size={20} stroke={2} />
                 </UnstyledButton>
             </Table.Td>
-            <Table.Td>
+            <Table.Td className={styles.centerBlock}>
                 <Button onClick={() => {openDeleteModal(); setDeleteItems([item.id])}} visibleFrom={"md"} size={"xs"} aria-label="Delete" leftSection={<IconTrash size={20} stroke={2} />}>
                     Удалить
                 </Button>
@@ -119,14 +103,25 @@ export const HabitsTable = () => {
                                 <IconTrashX size={16} stroke={2} />
                             </UnstyledButton>
                         </Table.Th>
-                        <Table.Th>Название</Table.Th>
-                        <Table.Th>Прогресс</Table.Th>
-                        <Table.Th>Изменить</Table.Th>
-                        <Table.Th>Удалить</Table.Th>
+                        <Table.Th className={styles.centerBlock}>Название</Table.Th>
+                        <Table.Th className={styles.centerBlock}>Прогресс</Table.Th>
+                        <Table.Th className={styles.centerBlock}>Изменить</Table.Th>
+                        <Table.Th className={styles.centerBlock}>Удалить</Table.Th>
                     </Table.Tr>
                 </Table.Thead>
                 <Table.Tbody>{rows}</Table.Tbody>
             </Table>
+            { TableData.filter((item) => item.type == type).length == 0 ?
+                <>
+                    <Space h={"xl"} />
+                    <h2 className={styles.no_habit}>
+                        На данный момент у вас нет
+                        {` ${type.slice(0, type.length - 2)}ых `.toLowerCase()}
+                        привычек!
+                    </h2>
+                </>
+                : <></>
+            }
         </>
     );
 }

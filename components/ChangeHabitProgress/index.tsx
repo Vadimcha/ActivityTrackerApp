@@ -4,16 +4,15 @@ import {Slider, Space, Switch} from "@mantine/core";
 import './ChangeHabitProgress.scss'
 import {IHabit} from "@/models/IHabit";
 import {useFormik} from "formik";
+import useGlobalStore from "@/store/GlobalStore";
 
 export const ChangeHabitProgress = ({ item, children }: {item: IHabit, children: React.ReactNode}) => {
     const [progress, setProgress] = useState<number>(item.progress)
+    const {changeHabitProgress} = useGlobalStore()
     const formik = useFormik({
-        initialValues: {
-            progress: 0,
-        },
-        onSubmit: values => {
-            let copy = values
-            copy.progress = progress
+        initialValues: {},
+        onSubmit: () => {
+            changeHabitProgress(item.id, progress)
         }
     })
     return (
@@ -30,6 +29,7 @@ export const ChangeHabitProgress = ({ item, children }: {item: IHabit, children:
                     <Space h={"md"}/>
                     <Slider
                         value={progress}
+                        max={item.maxProgress}
                         onChange={setProgress}
                         labelAlwaysOn
                     />
