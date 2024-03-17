@@ -1,6 +1,6 @@
 "use client"
 import React from 'react';
-import {ActionIcon, Button, Flex, Group, Space, Tabs} from "@mantine/core";
+import {ActionIcon, Button, Group, Space, Tabs} from "@mantine/core";
 import {IconCalendar, IconCalendarMonth, IconCalendarWeek, IconPlus} from "@tabler/icons-react";
 import {HabitsTable} from "@/components/HabitsTable";
 import {useDisclosure} from "@mantine/hooks";
@@ -15,6 +15,7 @@ export const HabitsPage = () => {
                 <AddHabit>
                     <Button
                         onClick={closeAddModal}
+                        type={"submit"}
                     >Сохранить</Button>
                 </AddHabit>
             </Modal>
@@ -32,10 +33,10 @@ export const HabitsPage = () => {
                                 <Tabs.Tab value="month" leftSection={<IconCalendarMonth stroke={2} size={20} />}>
                                     Ежемесячные
                                 </Tabs.Tab>
+                                <ActionIcon onClick={openAddModal} variant="filled" aria-label="Settings" size={"sm"}>
+                                    <IconPlus stroke={2} size={18} />
+                                </ActionIcon>
                             </Group>
-                            <ActionIcon onClick={openAddModal} variant="filled" aria-label="Settings" size={"sm"}>
-                                <IconPlus stroke={2} size={18} />
-                            </ActionIcon>
                         </Group>
                     </Tabs.List>
                     <Space h="md" />

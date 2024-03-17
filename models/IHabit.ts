@@ -1,7 +1,8 @@
 export interface IHabit {
     id: number,
     name: string,
-    type: "day" | "week" | "month",
+    type: string,
+    category?: string,
     progress: number,
     maxProgress: number,
 }

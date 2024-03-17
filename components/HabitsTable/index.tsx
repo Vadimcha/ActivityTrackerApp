@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Button, Center, Text, Checkbox, Progress, Table, UnstyledButton, Modal} from "@mantine/core";
+import {Button, Center, Text, Checkbox, Progress, Table, UnstyledButton, Modal, Flex} from "@mantine/core";
 import {IconAdjustmentsHorizontal, IconTrash, IconTrashX} from "@tabler/icons-react";
 import './HabitsTable.scss'
 import {useDisclosure} from "@mantine/hooks";
@@ -7,6 +7,7 @@ import {ChangeHabitProgress} from "@/components/ChangeHabitProgress";
 import {DeleteHabit} from "@/components/DeleteHabit";
 import {IHabit} from "@/models/IHabit";
 import {AddHabit} from "@/components/AddHabit";
+import styles from './HabitsTable.module.scss'
 
 const TableData: IHabit[] = [
     {
@@ -38,7 +39,7 @@ export const HabitsTable = () => {
             key={item.id}
             bg={selectedRows.includes(item.id) ? 'var(--mantine-color-blue-light)' : undefined}
         >
-            <Center component={Table.Td}>
+            <Table.Td className={styles.checkboxBox}>
                 <Checkbox
                     aria-label="Select row"
                     checked={selectedRows.includes(item.id)}
@@ -50,10 +51,17 @@ export const HabitsTable = () => {
                         )
                     }
                 />
-            </Center>
+            </Table.Td >
             <Table.Td>{item.name}</Table.Td>
-            <Table.Td >
-                <Progress value={(item.progress / item.maxProgress) * 100}/>
+            <Table.Td className={styles.progressWrap}>
+                <div className={styles.progress}>
+                    <Text className={styles.progress} size={"xs"}>
+                        { item.maxProgress == 1 ?
+                        (item.progress == 0 ? "Не выполнено" : "Выполнено"):
+                        `${item.progress}/${item.maxProgress}`
+                    }</Text>
+                    <Progress className={styles.progressBar} value={(item.progress / item.maxProgress) * 100}/>
+                </div>
             </Table.Td>
             <Table.Td>
                 <Button onClick={() => {openChangeModal(); setChangeItem(item)}} visibleFrom={"md"} size={"xs"} aria-label="Settings" leftSection={<IconAdjustmentsHorizontal size={16} stroke={2} />}>
@@ -81,6 +89,7 @@ export const HabitsTable = () => {
                     <ChangeHabitProgress item={changeItem}>
                         <Button
                             onClick={closeChangeModal}
+                            type={'submit'}
                         >Сохранить изменения</Button>
                     </ChangeHabitProgress>
                 </Modal>
@@ -90,16 +99,23 @@ export const HabitsTable = () => {
                     <DeleteHabit ids={deleteItems}>
                         <Button
                             onClick={closeDeleteModal}
-                        >Сохранить изменения</Button>
+                            type={'submit'}
+                        >Удалить</Button>
                     </DeleteHabit>
                 </Modal>
                 : <></>}
 
             <Table withColumnBorders>
                 <Table.Thead>
-                    <Table.Tr>
-                        <Table.Th className={"btn"}>
-                            <UnstyledButton hidden={selectedRows.length == 0}>
+                    <Table.Tr className={styles.checkboxBoxWrap}>
+                        <Table.Th className={styles.checkboxBox}>
+                            <UnstyledButton
+                                hidden={selectedRows.length == 0}
+                                onClick={() => {
+                                    openDeleteModal();
+                                    setDeleteItems(selectedRows)
+                                }}
+                            >
                                 <IconTrashX size={16} stroke={2} />
                             </UnstyledButton>
                         </Table.Th>
