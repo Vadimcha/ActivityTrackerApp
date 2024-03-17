@@ -14,6 +14,7 @@ export default function Layout({children}: {children: React.ReactNode}) {
     const [opened, { toggle }] = useDisclosure();
     return (
         <html lang="en">
+        <title>Трекер активностей</title>
             <body className={inter.className}>
                 <MantineProvider defaultColorScheme={"dark"}>
                         <AppShell

@@ -12,7 +12,6 @@ export const Header = ({ children }: {children: React.ReactNode}) => {
                 {children}
                 <h2>Страница с привычками</h2>
                 <Group>
-                    <p>Username</p>
                     <Avatar radius={"xl"} alt={"Avatar"} />
                 </Group>
             </Flex>

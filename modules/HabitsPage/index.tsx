@@ -24,14 +24,23 @@ export const HabitsPage = () => {
                     <Tabs.List>
                         <Group align={"center"} gap={"5px"}>
                             <Group gap={0}>
-                                <Tabs.Tab value="today" leftSection={<IconCalendar stroke={2} size={20} />}>
+                                <Tabs.Tab value="today" visibleFrom={"sm"} leftSection={<IconCalendar stroke={2} size={20} />}>
                                     Ежедневные
                                 </Tabs.Tab>
-                                <Tabs.Tab value="week" leftSection={<IconCalendarWeek stroke={2} size={20} />}>
+                                <Tabs.Tab value="today" hiddenFrom={"sm"}>
+                                    <IconCalendar stroke={2} size={20} />
+                                </Tabs.Tab>
+                                <Tabs.Tab value="week" visibleFrom={"sm"} leftSection={<IconCalendarWeek stroke={2} size={20} />}>
                                     Еженедельные
                                 </Tabs.Tab>
-                                <Tabs.Tab value="month" leftSection={<IconCalendarMonth stroke={2} size={20} />}>
+                                <Tabs.Tab value="week" hiddenFrom={"sm"}>
+                                    <IconCalendarWeek stroke={2} size={20} />
+                                </Tabs.Tab>
+                                <Tabs.Tab value="month" visibleFrom={"sm"} leftSection={<IconCalendarMonth stroke={2} size={20} />}>
                                     Ежемесячные
+                                </Tabs.Tab>
+                                <Tabs.Tab value="month" hiddenFrom={"sm"}>
+                                    <IconCalendarMonth stroke={2} size={20} />
                                 </Tabs.Tab>
                                 <ActionIcon onClick={openAddModal} variant="filled" aria-label="Settings" size={"sm"}>
                                     <IconPlus stroke={2} size={18} />

@@ -92,7 +92,7 @@ export const HabitsTable = ({ type }: {type: string}) => {
             <Table withColumnBorders>
                 <Table.Thead>
                     <Table.Tr className={styles.checkboxBoxWrap}>
-                        <Table.Th className={styles.checkboxBox}>
+                        <Table.Th className={styles.checkboxBox} style={{ padding: "0 2px" }}>
                             <UnstyledButton
                                 hidden={selectedRows.length == 0}
                                 onClick={() => {
@@ -100,7 +100,7 @@ export const HabitsTable = ({ type }: {type: string}) => {
                                     setDeleteItems(selectedRows)
                                 }}
                             >
-                                <IconTrashX size={16} stroke={2} />
+                                <IconTrashX size={20} stroke={2} />
                             </UnstyledButton>
                         </Table.Th>
                         <Table.Th className={styles.centerBlock}>Название</Table.Th>
