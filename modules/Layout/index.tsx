@@ -9,6 +9,7 @@ import {NavBar} from "@/components/NavBar";
 import '@/config/globals.css'
 import '@/config/reset.css'
 import {Header} from "@/components/Header";
+import './Layout.scss'
 
 export default function Layout({children}: {children: React.ReactNode}) {
     const [opened, { toggle }] = useDisclosure();
