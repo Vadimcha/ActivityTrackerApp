@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Button, Center, Text, Checkbox, Progress, Table, UnstyledButton, Modal, Flex, Space} from "@mantine/core";
+import {Button, Popover, Text, Checkbox, Progress, Table, UnstyledButton, Modal, Space} from "@mantine/core";
 import {IconAdjustmentsHorizontal, IconTrash, IconTrashX} from "@tabler/icons-react";
 import './HabitsTable.scss'
 import {useDisclosure} from "@mantine/hooks";
@@ -25,7 +25,8 @@ export const HabitsTable = ({ type }: {type: string}) => {
         >
             <Table.Td className={styles.checkboxBox} style={{ padding: "0 2px" }}>
                 <Checkbox
-                    aria-label={`Select row ${item.id}`}
+                    size={"sm"}
+                    aria-label={`Select row`}
                     checked={selectedRows.includes(item.id)}
                     onChange={(event) =>
                         setSelectedRows(
@@ -36,7 +37,16 @@ export const HabitsTable = ({ type }: {type: string}) => {
                     }
                 />
             </Table.Td >
-            <Table.Td>{item.name}</Table.Td>
+            <Table.Td>
+                <Popover width={200} position="bottom" withArrow shadow="md">
+                    <Popover.Target>
+                        <Text size={"sm"} lineClamp={1} style={{ width: "fit-content", overflow: "hidden" }}>{item.name}</Text>
+                    </Popover.Target>
+                    <Popover.Dropdown>
+                        <Text size="xs">{item.name}</Text>
+                    </Popover.Dropdown>
+                </Popover>
+            </Table.Td>
             <Table.Td className={styles.progressWrap}>
                 <div className={styles.progress}>
                     <p className={styles.progressText}>
