@@ -1,10 +1,12 @@
 import React, {useEffect, useState} from 'react';
-import {Avatar, Divider, Flex, Group} from "@mantine/core";
+import {Anchor, Avatar, Divider, Flex, Group} from "@mantine/core";
 import styles from './Header.module.scss'
 import {NavLinks} from "@/components/NavBar/NavLinks";
+import useGlobalStore from "@/store/GlobalStore";
 
 export const Header = ({ children }: {children: React.ReactNode}) => {
     const [label, setLabel] = useState<string>('Ошибка')
+    const {avatar} = useGlobalStore()
     useEffect(() => {
         const curLink = NavLinks.find(link => link.src == window.location.pathname)
         if(curLink != undefined)
@@ -21,9 +23,13 @@ export const Header = ({ children }: {children: React.ReactNode}) => {
                 <h2 className={styles.title}>
                     { label }
                 </h2>
-                <Group>
-                    <Avatar radius={"xl"} size={"30"} alt={"Avatar"} />
-                </Group>
+                <Anchor href={"/profile"}>
+                    <Avatar
+                        src={"/Avatar.jpg"}
+                        radius={"xl"}
+                        size={"30"}
+                    />
+                </Anchor>
             </Flex>
             <Divider my="md" />
         </div>

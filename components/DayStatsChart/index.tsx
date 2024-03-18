@@ -1,3 +1,4 @@
+"use client"
 import React, {useEffect} from 'react';
 import useGlobalStore from "@/store/GlobalStore";
 import {AreaChart, ChartTooltipProps, getFilteredChartTooltipPayload} from "@mantine/charts";
@@ -25,9 +26,10 @@ export const DayStatsChart = () => {
         );
     }
     return (
-        <Flex align={"center"} direction={"column"} gap={"5px"}>
-            <Text size={"sm"} fw={500}>Количество выполненных задач</Text>
+        <div className={styles.flexBox}>
+            <p className={styles.chartTitle}>Количество выполненных задач</p>
             <AreaChart
+                h={170}
                 className={styles.chart}
                 data={dayStats}
                 dataKey="date"
@@ -38,10 +40,12 @@ export const DayStatsChart = () => {
                 tooltipProps={{
                     content: ({ label, payload }) => <ChartTooltip label={label} payload={payload} />,
                 }}
+                yAxisProps={{ tickMargin: 0 }}
+                xAxisProps={{ tickMargin: 0 }}
                 curveType="linear"
                 gridAxis="x"
                 connectNulls
             />
-        </Flex>
+        </div>
     )
 }

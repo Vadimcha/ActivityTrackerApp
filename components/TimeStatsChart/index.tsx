@@ -1,3 +1,4 @@
+"use client"
 import React, {useEffect} from 'react';
 import styles from './TimeStatsChart.module.scss'
 import {Flex, Text} from "@mantine/core";
@@ -21,15 +22,16 @@ export const TimeStatsChart = () => {
     }
     return (
         <div>
-            <Flex align={"center"} direction={"column"} gap={"5px"}>
-                <Text size={"sm"} fw={500}>Временная активность за неделю</Text>
+            <div className={styles.flexBox}>
+                <p className={styles.chartTitle}>Временная активность за неделю</p>
                 <BarChart
                     className={styles.chart}
-                    h={300}
+                    h={170}
                     data={timeStats}
                     dataKey="date"
+                    yAxisProps={{ tickMargin: 0, domain: [0, 10] }}
+                    xAxisProps={{ tickMargin: 0 }}
                     series={[
-                        { name: 'maxValue', color: 'transparent' },
                         { name: 'quantity', color: 'var(--mantine-primary-color-filled)' },
                     ]}
                     tooltipProps={{
@@ -37,7 +39,7 @@ export const TimeStatsChart = () => {
                     }}
                     tickLine="y"
                 />
-            </Flex>
+            </div>
         </div>
     )
 }

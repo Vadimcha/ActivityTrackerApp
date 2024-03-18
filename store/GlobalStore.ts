@@ -9,6 +9,9 @@ import {formatDate} from "@/utils/FormatDateToChartType";
 import {ITimeStat} from "@/models/ITimeStat";
 
 interface GlobalStore {
+    userName: string,
+    avatar: string,
+
     habits: IHabit[],
     history: IHistoryItem[],
     achivments: IAchivment[],
@@ -26,6 +29,9 @@ interface GlobalStore {
 const useGlobalStore = create<GlobalStore>()(
     persist(
         (set, get) => ({
+            userName: 'Billie Eilish',
+            avatar: '',
+
             habits: [],
             history: [],
             achivments: [],
@@ -87,10 +93,9 @@ const useGlobalStore = create<GlobalStore>()(
             },
             getTimeStats: () => {
                 const stats = [] as ITimeStat[]
-                for(let j = 0; j < 23; ++j)
+                for(let j = 0; j < 24; ++j)
                     stats.push({
                         date: `${j < 10 ? `0${j}:00` : `${j}:00`}`,
-                        maxValue: 0,
                         quantity: 0,
                     })
                 for(let i = 7; i > -1; --i) {
@@ -106,7 +111,6 @@ const useGlobalStore = create<GlobalStore>()(
                             return curHour == j
                         }).length;
                         stats[j].quantity += quantity
-                        stats[j].maxValue = stats[j].quantity  + 1
                     }
                 }
                 set({ timeStats: stats })

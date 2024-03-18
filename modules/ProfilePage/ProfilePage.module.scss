@@ -1,5 +1,51 @@
-.charts {
-  //display: grid;
-  //grid-template-columns: repeat(3, 1fr);
-  //grid-column-gap: 10px;
+.container {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr 1.5fr;
+  grid-template-rows: repeat(2, 1fr);
+  grid-template-areas:
+    "user DayForm TimeForm"
+    "achivments achivments achivments";
+  justify-content: stretch;
+
+}
+
+.user {
+  width: 90%;
+  grid-area: user;
+  margin: 0 auto;
+
+  &__icon {
+    width: 100%;
+  }
+
+}
+
+.DayForm {
+  grid-area: DayForm;
+}
+
+.TimeForm {
+  grid-area: TimeForm;
+}
+
+.achivments {
+  grid-area: achivments;
+}
+
+@media (max-width: 650px) {
+  .user {
+    width: 100px;
+    &__userName {
+      font-size: 1rem;
+    }
+  }
+  .container {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    grid-template-areas:
+      "user user"
+      "DayForm TimeForm"
+      "achivments achivments";
+    justify-content: stretch;
+  }
 }

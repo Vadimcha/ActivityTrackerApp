@@ -1,4 +1,9 @@
-.chart {
-  width: 350px;
-  height: 300px;
+.chartTitle {
+  font-size: .7rem;
+}
+
+.flexBox {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
 }
