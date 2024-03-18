@@ -1,7 +1,8 @@
-export function formatDate(date: Date): string {
-    const months: string[] = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-    const monthIndex: number = date.getMonth();
-    const day: number = date.getDate();
-    const month: string = months[monthIndex];
-    return `${month} ${day}`;
-}
+export const formatDate = (date: Date) => {
+    if (!date) return "";
+
+    const dateObj = new Date(date);
+    const month = dateObj.toLocaleString("ru-RU", { month: "long" });
+    const day = String(dateObj.getDate());
+    return `${month[0].toUpperCase() + month.slice(1)} ${day}`;
+};

@@ -4,18 +4,23 @@ import {persist} from "zustand/middleware";
 import {IHabit} from "@/models/IHabit";
 import {IHistoryItem} from "@/models/IHistoryItem";
 import {IAchivment} from "@/models/IAchivment";
-import {IDayChartStat, IDayStat} from "@/models/IDayStat";
+import {IDayStat} from "@/models/IDayStat";
 import {formatDate} from "@/utils/FormatDateToChartType";
+import {ITimeStat} from "@/models/ITimeStat";
 
 interface GlobalStore {
     habits: IHabit[],
     history: IHistoryItem[],
     achivments: IAchivment[],
+    dayStats: IDayStat[],
+    timeStats: ITimeStat[],
+
     getNewId: () => Number,
     addNewHabit: (habit: IHabit) => void,
     deleteHabits: (ids: Number[], save: boolean) => void,
     changeHabitProgress: (id: number, progress: number) => void,
-    getDayStats: () => IDayChartStat[],
+    getDayStats: () => void,
+    getTimeStats: () => void,
 }
 
 const useGlobalStore = create<GlobalStore>()(
@@ -24,6 +29,9 @@ const useGlobalStore = create<GlobalStore>()(
             habits: [],
             history: [],
             achivments: [],
+            dayStats: [],
+            timeStats: [],
+
             getNewId: () => { return ((
                     get().habits.length == 0 ?
                     0 :
@@ -50,26 +58,58 @@ const useGlobalStore = create<GlobalStore>()(
                     }] })
             },
             getDayStats: () => {
-                const stats = [] as IDayChartStat[]
-                for(let i = 30; i > 0; --i) {
+                const stats = [] as IDayStat[]
+                for(let i = 7; i > -1; --i) {
                     let date = new Date()
                     date.setDate(date.getDate() - i)
-                    const history = get().history.filter(item => (item.time == date))
-                    const unique = new Set(history.map(item => item.id))
+                    const history = get().history.filter(item => {
+                        const A = new Date(item.time)
+                        return A.getDate() == date.getDate()
+                    })
+                    let unique = new Set(history.map(item => item.id)), uniqueArr = Array.from(unique);
                     let quantity = 0;
-                    unique.forEach(item => {
-                        const historyItem = history.findLast(obj => obj.id == item)
+                    for(let j = 0; j < uniqueArr.length; ++j) {
+                        const historyItem = history.findLast(obj => obj.id == Number(uniqueArr[j]))
                         if(historyItem) {
                             quantity += (
-                                historyItem.recentProgress != historyItem.maxProgress &&
-                                historyItem.updatedProgress != historyItem.maxProgress ? 1 : 0
+                                historyItem.updatedProgress === historyItem.maxProgress ? 1 : 0
                             )
                         }
-                    })
+                    }
                     const processedDate = formatDate(date)
-                    stats.push({ date: processedDate, quantity: quantity })
+                    stats.push({
+                        date: processedDate,
+                        maxValue: Math.max(quantity, 10),
+                        quantity: quantity
+                    })
                 }
-                return stats as IDayChartStat[];
+                set({ dayStats: stats })
+            },
+            getTimeStats: () => {
+                const stats = [] as ITimeStat[]
+                for(let j = 0; j < 23; ++j)
+                    stats.push({
+                        date: `${j < 10 ? `0${j}:00` : `${j}:00`}`,
+                        maxValue: 0,
+                        quantity: 0,
+                    })
+                for(let i = 7; i > -1; --i) {
+                    let date = new Date()
+                    date.setDate(date.getDate() - i)
+                    const history = get().history.filter(item => {
+                        const A = new Date(item.time)
+                        return A.getDate() == date.getDate()
+                    })
+                    for(let j = 0; j < 23; ++j) {
+                        const quantity = history.filter((item) => {
+                            let curDate = new Date(item.time), curHour = curDate.getHours()
+                            return curHour == j
+                        }).length;
+                        stats[j].quantity += quantity
+                        stats[j].maxValue = stats[j].quantity  + 1
+                    }
+                }
+                set({ timeStats: stats })
             },
             checkAchivments: () => {
 
