@@ -1,7 +1,8 @@
 import React, {useState} from 'react';
-import {Flex, Group, Text, NumberInput, Select, Space, Switch, TextInput, Button} from "@mantine/core";
+import {Flex, Group, Text, NumberInput, Select, Space, Switch, TextInput, Button, Autocomplete} from "@mantine/core";
 import {useFormik} from "formik";
 import useGlobalStore from "@/store/GlobalStore";
+import {IHabit} from "@/models/IHabit";
 
 export const AddHabit = ({ close }: {close: () => void}) => {
     const [error, setError] = useState('')
@@ -11,28 +12,26 @@ export const AddHabit = ({ close }: {close: () => void}) => {
     const [type, setType] = useState<string>('Ежедневная')
     const formik = useFormik({
         initialValues: {
-            id: 0,
-            progress: 0,
             name: '',
             category: '',
             maxProgress: 0,
             type: 'Ежедневная',
         },
         onSubmit: values => {
-            console.log(`BREAKPOINT 1`)
             if(!values.name) {
-                console.log(`BREAKPOINT 2`)
                 setError("Введите название")
                 return
             }
-            let copy = values
+            let copy = values as IHabit
             copy.type = type
             copy.category = category
             copy.id = getNewId() as number
             copy.progress = 0
             copy.maxProgress = (copy.maxProgress == 0 ? 1 : copy.maxProgress);
+            let date: Date = new Date();
+            copy.createdAt = date;
+            copy.updatedAt = date;
             addNewHabit(copy)
-            console.log(`BREAKPOINT 3`)
             close()
         }
     })
@@ -68,18 +67,14 @@ export const AddHabit = ({ close }: {close: () => void}) => {
                     onChange={(e) => setType(String(e))}
                     withAsterisk
                 />
-                <Select
+                <Autocomplete
                     size={"xs"}
                     label="Категория"
                     placeholder="Введите категорию"
                     value={category}
-                    checkIconPosition={"right"}
-                    allowDeselect={false}
-                    onSearchChange={setCategory}
-                    withCheckIcon={true}
+                    onChange={setCategory}
                     data={['Здоровье', 'Учёба', 'Развлечение']}
-                    searchable
-                    clearable
+                    maxDropdownHeight={200}
                 />
                 <Group align={"center"} gap={"5px"}>
                     <Flex align={"center"}>
