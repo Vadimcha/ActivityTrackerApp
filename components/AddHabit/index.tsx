@@ -1,10 +1,10 @@
-"use client"
 import React, {useState} from 'react';
-import {Flex, Group, Text, NumberInput, Select, Space, Switch, TextInput} from "@mantine/core";
+import {Flex, Group, Text, NumberInput, Select, Space, Switch, TextInput, Button} from "@mantine/core";
 import {useFormik} from "formik";
 import useGlobalStore from "@/store/GlobalStore";
 
-export const AddHabit = ({ children }: {children: React.ReactNode}) => {
+export const AddHabit = ({ close }: {close: () => void}) => {
+    const [error, setError] = useState('')
     const [progress, setProgress] = useState<boolean>(false)
     const [category, setCategory] = useState<string>('')
     const {getNewId, addNewHabit} = useGlobalStore()
@@ -19,6 +19,12 @@ export const AddHabit = ({ children }: {children: React.ReactNode}) => {
             type: 'Ежедневная',
         },
         onSubmit: values => {
+            console.log(`BREAKPOINT 1`)
+            if(!values.name) {
+                console.log(`BREAKPOINT 2`)
+                setError("Введите название")
+                return
+            }
             let copy = values
             copy.type = type
             copy.category = category
@@ -26,6 +32,8 @@ export const AddHabit = ({ children }: {children: React.ReactNode}) => {
             copy.progress = 0
             copy.maxProgress = (copy.maxProgress == 0 ? 1 : copy.maxProgress);
             addNewHabit(copy)
+            console.log(`BREAKPOINT 3`)
+            close()
         }
     })
     return (
@@ -40,8 +48,12 @@ export const AddHabit = ({ children }: {children: React.ReactNode}) => {
                     label="Название"
                     placeholder="Введите название привычки"
                     name={'name'}
+                    error={error}
                     value={formik.values.name}
-                    onChange={formik.handleChange}
+                    onChange={(e) => {
+                        formik.handleChange(e)
+                        setError('')
+                    }}
                     withAsterisk
                 />
                 <Select
@@ -50,6 +62,7 @@ export const AddHabit = ({ children }: {children: React.ReactNode}) => {
                     placeholder="Выберите период привычки"
                     data={['Ежедневная', 'Еженедельная', 'Ежемесячная']}
                     allowDeselect={false}
+                    checkIconPosition={"right"}
                     defaultValue={'Ежедневная'}
                     value={type}
                     onChange={(e) => setType(String(e))}
@@ -58,11 +71,15 @@ export const AddHabit = ({ children }: {children: React.ReactNode}) => {
                 <Select
                     size={"xs"}
                     label="Категория"
-                    placeholder="Введите название категории или выберите из существующих"
+                    placeholder="Введите категорию"
                     value={category}
-                    onChange={(e) => setCategory(String(e))}
+                    checkIconPosition={"right"}
+                    allowDeselect={false}
+                    onSearchChange={setCategory}
+                    withCheckIcon={true}
                     data={['Здоровье', 'Учёба', 'Развлечение']}
                     searchable
+                    clearable
                 />
                 <Group align={"center"} gap={"5px"}>
                     <Flex align={"center"}>
@@ -88,7 +105,9 @@ export const AddHabit = ({ children }: {children: React.ReactNode}) => {
                 </Group>
             </Flex>
             <Space h={"xl"} />
-            {children}
+            <Button
+                type={"submit"}
+            >Сохранить</Button>
         </form>
     )
 }

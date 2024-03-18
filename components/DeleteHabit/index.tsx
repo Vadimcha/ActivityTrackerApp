@@ -3,14 +3,16 @@ import React, {useState} from 'react';
 import {Space, Switch} from "@mantine/core";
 import {useFormik} from "formik";
 import useGlobalStore from "@/store/GlobalStore";
+import {Button} from "@mantine/core";
 
-export const DeleteHabit = ({ids, children}: {ids: number[], children: React.ReactNode}) => {
+export const DeleteHabit = ({ids, close}: {ids: number[], close: () => void}) => {
     const [save, setSave] = useState<boolean>(false)
     const {deleteHabits} = useGlobalStore()
     const formik = useFormik({
         initialValues: {},
         onSubmit: () => {
             deleteHabits(ids, save)
+            close()
         }
     })
     return (
@@ -21,7 +23,9 @@ export const DeleteHabit = ({ids, children}: {ids: number[], children: React.Rea
                 onChange={(event) => setSave(event.target.checked)}
             />
             <Space h={"md"}/>
-            {children}
+            <Button
+                type={'submit'}
+            >Удалить</Button>
         </form>
     )
 }

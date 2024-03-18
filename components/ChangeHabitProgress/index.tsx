@@ -5,14 +5,16 @@ import './ChangeHabitProgress.scss'
 import {IHabit} from "@/models/IHabit";
 import {useFormik} from "formik";
 import useGlobalStore from "@/store/GlobalStore";
+import {Button} from "@mantine/core";
 
-export const ChangeHabitProgress = ({ item, children }: {item: IHabit, children: React.ReactNode}) => {
+export const ChangeHabitProgress = ({ item, close }: {item: IHabit, close: () => void}) => {
     const [progress, setProgress] = useState<number>(item.progress)
     const {changeHabitProgress} = useGlobalStore()
     const formik = useFormik({
         initialValues: {},
         onSubmit: () => {
             changeHabitProgress(item.id, progress)
+            close()
         }
     })
     return (
@@ -36,7 +38,9 @@ export const ChangeHabitProgress = ({ item, children }: {item: IHabit, children:
                 </>
             }
             <Space h={"md"}/>
-            {children}
+            <Button
+                type={'submit'}
+            >Сохранить изменения</Button>
         </form>
     );
 }

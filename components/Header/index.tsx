@@ -13,7 +13,7 @@ export const Header = ({ children }: {children: React.ReactNode}) => {
                 {children}
                 <h2 className={styles.title}>Страница с привычками</h2>
                 <Group>
-                    <Avatar radius={"xl"} alt={"Avatar"} />
+                    <Avatar radius={"xl"} size={"30"} alt={"Avatar"} />
                 </Group>
             </Flex>
             <Divider my="md" />

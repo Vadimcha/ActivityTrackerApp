@@ -20,7 +20,7 @@ export default function Layout({children}: {children: React.ReactNode}) {
                 <MantineProvider defaultColorScheme={"dark"}>
                         <AppShell
                             navbar={{
-                                width: {md: 300, sm: 250},
+                                width: {md: 300, sm: 200},
                                 breakpoint: 'sm',
                                 collapsed: { mobile: !opened },
                             }}

@@ -23,7 +23,7 @@ export const HabitsTable = ({ type }: {type: string}) => {
             key={item.id}
             bg={selectedRows.includes(item.id) ? 'var(--mantine-color-blue-light)' : undefined}
         >
-            <Table.Td className={styles.checkboxBox}>
+            <Table.Td className={styles.checkboxBox} style={{ padding: "0 2px" }}>
                 <Checkbox
                     aria-label={`Select row ${item.id}`}
                     checked={selectedRows.includes(item.id)}
@@ -39,12 +39,15 @@ export const HabitsTable = ({ type }: {type: string}) => {
             <Table.Td>{item.name}</Table.Td>
             <Table.Td className={styles.progressWrap}>
                 <div className={styles.progress}>
-                    <Text className={styles.progress} size={"xs"}>
+                    <p className={styles.progressText}>
                         { item.maxProgress == 1 ?
-                        (item.progress == 0 ? "Не выполнено" : "Выполнено"):
+                        (item.progress == 0 ? "Не выполнено" : " Выполнено "):
                         `${item.progress}/${item.maxProgress}`
-                    }</Text>
-                    <Progress className={styles.progressBar} value={(item.progress / item.maxProgress) * 100}/>
+                    }</p>
+                    <Progress
+                        className={styles.progressBar}
+                        value={Math.ceil(item.progress * 100 / item.maxProgress)}
+                    />
                 </div>
             </Table.Td>
             <Table.Td className={styles.centerBlock}>
@@ -70,24 +73,12 @@ export const HabitsTable = ({ type }: {type: string}) => {
         <>
             {changeItem != null ?
                 <Modal opened={openedChange} onClose={closeChangeModal} title="Изменить прогресс">
-                    <ChangeHabitProgress item={changeItem}>
-                        <Button
-                            onClick={closeChangeModal}
-                            type={'submit'}
-                        >Сохранить изменения</Button>
-                    </ChangeHabitProgress>
+                    <ChangeHabitProgress item={changeItem} close={closeChangeModal} />
                 </Modal>
                 : <></>}
-            {deleteItems != null ?
-                <Modal opened={openedDelete} onClose={closeDeleteModal} title="Удалить привычку">
-                    <DeleteHabit ids={deleteItems}>
-                        <Button
-                            onClick={closeDeleteModal}
-                            type={'submit'}
-                        >Удалить</Button>
-                    </DeleteHabit>
-                </Modal>
-                : <></>}
+            <Modal opened={openedDelete} onClose={closeDeleteModal} title="Удалить привычку">
+                <DeleteHabit ids={deleteItems} close={closeDeleteModal} />
+            </Modal>
 
             <Table withColumnBorders>
                 <Table.Thead>

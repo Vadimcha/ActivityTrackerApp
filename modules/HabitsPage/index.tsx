@@ -12,12 +12,7 @@ export const HabitsPage = () => {
     return (
         <div>
             <Modal opened={openedAdd} onClose={closeAddModal} title="Добавить привычку">
-                <AddHabit>
-                    <Button
-                        onClick={closeAddModal}
-                        type={"submit"}
-                    >Сохранить</Button>
-                </AddHabit>
+                <AddHabit close={closeAddModal} />
             </Modal>
             <div>
                 <Tabs defaultValue={"today"}>
@@ -42,6 +37,7 @@ export const HabitsPage = () => {
                                 <Tabs.Tab value="month" hiddenFrom={"sm"}>
                                     <IconCalendarMonth stroke={2} size={20} />
                                 </Tabs.Tab>
+                                <Space w={20} hiddenFrom={'sm'} />
                                 <ActionIcon onClick={openAddModal} variant="filled" aria-label="Settings" size={"sm"}>
                                     <IconPlus stroke={2} size={18} />
                                 </ActionIcon>
