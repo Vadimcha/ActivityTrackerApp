@@ -40,7 +40,11 @@ export const HabitsTable = ({ type }: {type: string}) => {
             <Table.Td>
                 <Popover width={200} position="bottom" withArrow shadow="md">
                     <Popover.Target>
-                        <Text size={"sm"} lineClamp={1} style={{ width: "fit-content", overflow: "hidden" }}>{item.name}</Text>
+                        <Text
+                            size={"sm"}
+                            lineClamp={1}
+                            style={{ width: "fit-content", overflow: "hidden" }}
+                        >{item.name}</Text>
                     </Popover.Target>
                     <Popover.Dropdown>
                         <Text size="xs">{item.name}</Text>
@@ -79,50 +83,47 @@ export const HabitsTable = ({ type }: {type: string}) => {
         </Table.Tr>
     ));
 
-    return (
-        <>
-            {changeItem != null ?
-                <Modal opened={openedChange} onClose={closeChangeModal} title="Изменить прогресс">
-                    <ChangeHabitProgress item={changeItem} close={closeChangeModal} />
-                </Modal>
-                : <></>}
-            <Modal opened={openedDelete} onClose={closeDeleteModal} title="Удалить привычку">
-                <DeleteHabit ids={deleteItems} close={closeDeleteModal} />
-            </Modal>
+    return ( <>
+    {changeItem != null ?
+        <Modal opened={openedChange} onClose={closeChangeModal} title="Изменить прогресс">
+            <ChangeHabitProgress item={changeItem} close={closeChangeModal} />
+        </Modal> : <></>}
 
-            <Table withColumnBorders>
-                <Table.Thead>
-                    <Table.Tr className={styles.checkboxBoxWrap}>
-                        <Table.Th className={styles.checkboxBox} style={{ padding: "0 2px" }}>
-                            <UnstyledButton
-                                hidden={selectedRows.length == 0}
-                                onClick={() => {
-                                    openDeleteModal();
-                                    setDeleteItems(selectedRows)
-                                }}
-                            >
-                                <IconTrashX size={20} stroke={2} />
-                            </UnstyledButton>
-                        </Table.Th>
-                        <Table.Th className={styles.centerBlock}>Название</Table.Th>
-                        <Table.Th className={styles.centerBlock}>Прогресс</Table.Th>
-                        <Table.Th className={styles.centerBlock}>Изменить</Table.Th>
-                        <Table.Th className={styles.centerBlock}>Удалить</Table.Th>
-                    </Table.Tr>
-                </Table.Thead>
-                <Table.Tbody>{rows}</Table.Tbody>
-            </Table>
-            { TableData.filter((item) => item.type == type).length == 0 ?
-                <>
-                    <Space h={"xl"} />
-                    <h2 className={styles.no_habit}>
-                        На данный момент у вас нет
-                        {` ${type.slice(0, type.length - 2)}ых `.toLowerCase()}
-                        привычек!
-                    </h2>
-                </>
-                : <></>
-            }
-        </>
-    );
+        <Modal opened={openedDelete} onClose={closeDeleteModal} title="Удалить привычку">
+            <DeleteHabit ids={deleteItems} close={closeDeleteModal} />
+        </Modal>
+
+        <Table withColumnBorders>
+            <Table.Thead>
+                <Table.Tr className={styles.checkboxBoxWrap}>
+                    <Table.Th className={styles.checkboxBox} style={{ padding: "0 2px" }}>
+                        <UnstyledButton
+                            hidden={selectedRows.length == 0}
+                            onClick={() => {
+                                openDeleteModal();
+                                setDeleteItems(selectedRows)
+                            }}
+                        >
+                            <IconTrashX size={20} stroke={2} />
+                        </UnstyledButton>
+                    </Table.Th>
+                    <Text component={Table.Th} size={"sm"} fw={600} className={styles.column_name}>Название</Text>
+                    <Text component={Table.Th} size={"sm"} fw={600} className={styles.column_name}>Прогресс</Text>
+                    <Text component={Table.Th} size={"sm"} fw={600} className={styles.column_name}>Изменить</Text>
+                    <Text component={Table.Th} size={"sm"} fw={600} className={styles.column_name}>Удалить</Text>
+                </Table.Tr>
+            </Table.Thead>
+            <Table.Tbody>{rows}</Table.Tbody>
+        </Table>
+
+    { TableData.filter((item) => item.type == type).length == 0 ?
+        <div>
+            <Space h={"xl"} />
+            <h2 className={styles.no_habit}>
+                На данный момент у вас нет
+                {` ${type.slice(0, type.length - 2)}ых `.toLowerCase()}
+                привычек!
+            </h2>
+        </div> : <></> }
+    </> );
 }

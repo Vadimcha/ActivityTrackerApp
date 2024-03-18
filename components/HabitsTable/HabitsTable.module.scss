@@ -32,6 +32,11 @@
   text-align: center;
 }
 
+.column_name {
+  width: fit-content;
+  overflow: hidden;
+}
+
 @media (max-width: 991px) {
   .centerBlock {
     text-align: center;
