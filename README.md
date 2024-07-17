@@ -1,34 +1,71 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# 🌟 Habit Tracker Application
 
-## Getting Started
 
-First, run the development server:
+https://github.com/user-attachments/assets/aef96150-2b38-47c0-9827-c1902e52122e
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Welcome to our Habit Tracker Application! This application is built using Next.js with Progressive Web App (PWA) features, designed to help you create and track your daily, weekly, and monthly habits effectively.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🎯 Features
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+### 📋 Habit Management
+- **Create and Track Habits:** Easily create habits that you want to track on a daily, weekly, or monthly basis. 
+- **Two Types of Habits:** You can create habits with progress tracking (e.g., drinking 8 glasses of water) or without progress tracking (e.g., meditate).
+- **Habit Library:** Save all your created habits in the habit library. Quickly add them to your daily plan without needing to recreate them every time.
 
-## Learn More
+### ⏳ Productivity Tools
+- **Pomodoro Timer:** Enhance your focus with our built-in Pomodoro timer. This feature helps you work in intervals, boosting productivity and concentration.
 
-To learn more about Next.js, take a look at the following resources:
+### 🎨 Personalization
+- **Theme and Color Customization:** Personalize the look and feel of the application by changing the theme and interface color according to your preference.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### 📈 Statistics and Tracking
+- **Task Completion Statistics:** Track the number of tasks you complete each day and analyze your productivity trends.
+- **Habit Completion Timing:** Monitor the times when you are most likely to complete your habits, allowing you to optimize your schedule.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+### 🏆 Gamification
+- **Achievements:** Stay motivated with our gamification system. Earn achievements as you reach your habit goals and milestones.
 
-## Deploy on Vercel
+## 🛠️ Installation
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+To get started with the Habit Tracker Application, follow these steps:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+1. Clone the repository:
+    ```bash
+    git clone https://github.com/yourusername/habit-tracker-app.git
+    ```
+2. Navigate to the project directory:
+    ```bash
+    cd habit-tracker-app
+    ```
+3. Install dependencies:
+    ```bash
+    npm install
+    ```
+4. Run the development server:
+    ```bash
+    npm run dev
+    ```
+
+The application will be available at `http://localhost:3000`.
+
+## 🌐 Progressive Web App (PWA)
+
+Our application is a Progressive Web App (PWA), which means you can install it on your device for a native app-like experience. It offers the following benefits:
+- **Offline Access:** Access your habits and stats even without an internet connection.
+- **Fast Loading:** The app loads quickly and provides a seamless user experience.
+- **Push Notifications:** Get reminders and updates about your habits directly on your device.
+
+## 🤝 Contributing
+
+We welcome contributions from the community! If you have any ideas, suggestions, or bug reports, please create an issue or submit a pull request. For major changes, please open an issue first to discuss what you would like to change.
+
+## 📜 License
+
+This project is licensed under the MIT License. See the LICENSE file for more details.
+
+## 📬 Contact
+
+If you have any questions or need further assistance, please feel free to reach out to us at BelovBadim2014@yandex.ru
+
+Thank you for using the Habit Tracker Application! We hope it helps you build and maintain your habits successfully.
