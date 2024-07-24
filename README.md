@@ -32,11 +32,11 @@ To get started with the Habit Tracker Application, follow these steps:
 
 1. Clone the repository:
     ```bash
-    git clone https://github.com/yourusername/habit-tracker-app.git
+    git clone https://github.com/Vadimcha/ActivityTrackerApp.git
     ```
 2. Navigate to the project directory:
     ```bash
-    cd habit-tracker-app
+    cd ActivityTrackerApp
     ```
 3. Install dependencies:
     ```bash
@@ -59,10 +59,6 @@ Our application is a Progressive Web App (PWA), which means you can install it o
 ## 🤝 Contributing
 
 We welcome contributions from the community! If you have any ideas, suggestions, or bug reports, please create an issue or submit a pull request. For major changes, please open an issue first to discuss what you would like to change.
-
-## 📜 License
-
-This project is licensed under the MIT License. See the LICENSE file for more details.
 
 ## 📬 Contact
 
